@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import ContactCode from '../components/ContactCode';
 import styles from '../styles/ContactPage.module.css';
+import emailjs from '@emailjs/browser';
+import Defaults from '../components/Defaults';
+
 
 const ContactPage = () => {
   const [name, setName] = useState('');
@@ -8,22 +11,21 @@ const ContactPage = () => {
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
 
-  const submitForm = async (e) => {
-    e.preventDefault();
-    console.log(process.env.NEXT_PUBLIC_API_URL);
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
-      method: 'POST',
-      body: JSON.stringify({ name, email, subject, message }),
-    });
-    if (res.ok) {
-      alert('Your response has been received!');
+  const submitForm = (e) => {
+    console.log(Defaults.TEMPLATE_ID);
+    console.log(Defaults.USER_ID);
+    e.preventDefault(); // Prevents default refresh by the browser
+    emailjs.sendForm(Defaults.SERVICE_ID, Defaults.TEMPLATE_ID, e.target, Defaults.USER_ID)
+    .then((result) => {
       setName('');
       setEmail('');
       setSubject('');
       setMessage('');
-    } else {
-      alert('There was an error. Please try again in a while.');
-    }
+      alert("Thanks for the email!")
+    },
+    (error) => {
+      alert("Whoops! Something happened! Try again later.")
+    });
   };
 
   return (
