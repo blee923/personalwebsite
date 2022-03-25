@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ContactCode from '../components/ContactCode';
 import styles from '../styles/ContactPage.module.css';
 import emailjs from '@emailjs/browser';
-import Defaults from '../components/Defaults';
 
 
 const ContactPage = () => {
@@ -12,10 +11,8 @@ const ContactPage = () => {
   const [message, setMessage] = useState('');
 
   const submitForm = (e) => {
-    console.log(Defaults.TEMPLATE_ID);
-    console.log(Defaults.USER_ID);
     e.preventDefault(); // Prevents default refresh by the browser
-    emailjs.sendForm(Defaults.SERVICE_ID, Defaults.TEMPLATE_ID, e.target, Defaults.USER_ID)
+    emailjs.sendForm(process.env.NEXT_PUBLIC_SERVICE_ID, process.env.NEXT_PUBLIC_TEMPLATE_ID, e.target, process.env.NEXT_PUBLIC_USER_ID)
     .then((result) => {
       setName('');
       setEmail('');
@@ -92,7 +89,9 @@ const ContactPage = () => {
 
 export async function getStaticProps() {
   return {
-    props: { title: 'Contact' },
+    props: { 
+      title: 'Contact'
+   },
   };
 }
 

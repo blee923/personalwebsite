@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "dev": "env next dev",
+    "build": "env next build",
+    "start": "env next start"
   },
   "dependencies": {
     "@notionhq/client": "^0.2.2",
@@ -13,7 +13,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-github-calendar": "^3.2.2",
-    "@emailjs/browser": "*",
-    "dotenv": "*"
+    "react-scripts": "*",
+    "@emailjs/browser": "*"
   }
 }
